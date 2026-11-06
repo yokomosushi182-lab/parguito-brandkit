@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Parguito — Brand Assets</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>html{scroll-behavior:smooth}body{margin:0;background:#F6F0E4;color:#0E1A3A;font-family:'Baloo 2',sans-serif}a{color:#1C4ED8}a:hover{color:#0E1A3A}</style>
+</helmet>
+
+<nav style="position:sticky;top:0;z-index:10;background:#0E1A3A;color:#F6F0E4">
+<div style="max-width:1240px;margin:0 auto;padding:14px 32px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+<a href="#top" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:#F6F0E4"><img src="logo/parguito-logo-opposite-blue.svg" alt="Parguito" style="height:30px;display:block"></img><span style="font-size:20px;font-weight:800">Brand Assets</span></a>
+<div style="display:flex;align-items:center;gap:22px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:13px">
+<a href="#colorways" style="color:#F6F0E4;text-decoration:none" style-hover="color:#2EDE89">Colorways</a>
+<a href="#logo" style="color:#F6F0E4;text-decoration:none" style-hover="color:#2EDE89">Logo</a>
+<a href="#palette" style="color:#F6F0E4;text-decoration:none" style-hover="color:#2EDE89">Palette</a>
+<a href="#type" style="color:#F6F0E4;text-decoration:none" style-hover="color:#2EDE89">Type</a>
+<button onClick="{{ downloadAll }}" style="font-family:'IBM Plex Mono',monospace;font-size:13px;padding:10px 16px;background:#2EDE89;color:#0E1A3A;border:0;border-radius:99px;cursor:pointer;font-weight:500" style-hover="background:#FFD23F">{{ zipLabel }}</button>
+</div>
+</div>
+</nav>
+
+<div id="top" style="max-width:1240px;margin:0 auto;padding:56px 32px 96px;display:flex;flex-direction:column;gap:112px">
+
+<section style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:48px;align-items:center">
+<img src="{{ hero.poster }}" alt="Parguito artwork" style="width:100%;aspect-ratio:1;display:block;border-radius:8px"></img>
+<div style="display:flex;flex-direction:column;gap:22px">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:13px;text-transform:uppercase;letter-spacing:0.08em">Primary artwork</div>
+<h1 style="margin:0;font-size:64px;font-weight:800;line-height:0.95;letter-spacing:-0.01em;text-wrap:pretty">{{ hero.name }}</h1>
+<p style="margin:0;font-size:19px;line-height:1.5;font-weight:500;text-wrap:pretty;max-width:46ch">Official Parguito logo, artwork and scale pattern. Every file is vector (SVG) and scales to any size; PNG exports are 3000 px with transparency where it applies.</p>
+<div style="display:flex;gap:10px;flex-wrap:wrap">
+<a href="{{ hero.poster }}" download style="font-family:'IBM Plex Mono',monospace;font-size:14px;padding:12px 18px;background:#0E1A3A;color:#F6F0E4;text-decoration:none;border-radius:99px">Artwork SVG</a>
+<button onClick="{{ hero.posterPng }}" style="font-family:'IBM Plex Mono',monospace;font-size:14px;padding:12px 18px;border:2px solid #0E1A3A;background:transparent;color:#0E1A3A;border-radius:99px;cursor:pointer">Artwork PNG</button>
+<a href="{{ hero.logo }}" download style="font-family:'IBM Plex Mono',monospace;font-size:14px;padding:12px 18px;border:2px solid #0E1A3A;color:#0E1A3A;text-decoration:none;border-radius:99px">Logo SVG</a>
+<button onClick="{{ hero.logoPng }}" style="font-family:'IBM Plex Mono',monospace;font-size:14px;padding:12px 18px;border:2px solid #0E1A3A;background:transparent;color:#0E1A3A;border-radius:99px;cursor:pointer">Logo PNG</button>
+</div>
+</div>
+</section>
+
+<section id="colorways" style="display:flex;flex-direction:column;gap:28px;scroll-margin-top:90px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:2px solid #0E1A3A;padding-bottom:12px">
+<h2 style="margin:0;font-size:40px;font-weight:800">Colorways</h2>
+<div style="display:flex;gap:4px;padding:4px;background:#FFFDF8;border-radius:99px;box-shadow:inset 0 0 0 1px rgba(14,26,58,.15);font-family:'IBM Plex Mono',monospace;font-size:13px">
+<button onClick="{{ showScales }}" style="font-family:inherit;font-size:inherit;padding:8px 14px;border:0;border-radius:99px;cursor:pointer;background:{{ scalesBg }};color:{{ scalesFg }}">With scales</button>
+<button onClick="{{ showSolid }}" style="font-family:inherit;font-size:inherit;padding:8px 14px;border:0;border-radius:99px;cursor:pointer;background:{{ solidBg }};color:{{ solidFg }}">Fish only</button>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:24px">
+<sc-for list="{{ ways }}" as="w" hint-placeholder-count="5">
+<div style="display:flex;flex-direction:column;gap:12px">
+<img src="{{ w.preview }}" alt="{{ w.name }}" style="width:100%;aspect-ratio:1;display:block;border-radius:8px;box-shadow:inset 0 0 0 1px rgba(14,26,58,.1);background:repeating-conic-gradient(#E9E1D0 0 25%, #FFFDF8 0 50%) 0 0/24px 24px"></img>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+<div style="font-size:21px;font-weight:700">{{ w.name }}</div>
+<div style="display:flex;gap:4px">
+<div style="width:18px;height:18px;border-radius:50%;background:{{ w.bg }};box-shadow:inset 0 0 0 1px rgba(14,26,58,.25)"></div>
+<div style="width:18px;height:18px;border-radius:50%;background:{{ w.fg }};box-shadow:inset 0 0 0 1px rgba(14,26,58,.25)"></div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:auto 1fr 1fr;gap:6px 10px;align-items:center;font-family:'IBM Plex Mono',monospace;font-size:12px">
+<div>Artwork</div><a href="{{ w.poster }}" download>SVG</a><a href="#" onClick="{{ w.posterPng }}">PNG</a>
+<div>Fish only</div><a href="{{ w.solid }}" download>SVG</a><a href="#" onClick="{{ w.solidPng }}">PNG</a>
+<div>Logo</div><a href="{{ w.logo }}" download>SVG</a><a href="#" onClick="{{ w.logoPng }}">PNG</a>
+<div>Pattern</div><a href="{{ w.pattern }}" download>SVG</a><a href="#" onClick="{{ w.patternPng }}">PNG</a>
+</div>
+</div>
+</sc-for>
+</div>
+</section>
+
+<section id="logo" style="display:flex;flex-direction:column;gap:28px;scroll-margin-top:90px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:2px solid #0E1A3A;padding-bottom:12px">
+<h2 style="margin:0;font-size:40px;font-weight:800">Logo</h2>
+<a href="logo/parguito-logo.svg" download style="font-family:'IBM Plex Mono',monospace;font-size:13px">Black master SVG</a>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px">
+<sc-for list="{{ logos }}" as="l" hint-placeholder-count="6">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="border-radius:8px;padding:48px 36px;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(14,26,58,.15);background:repeating-conic-gradient(#E9E1D0 0 25%, #FFFDF8 0 50%) 0 0/24px 24px"><img src="{{ l.src }}" alt="{{ l.name }}" style="width:100%;display:block"></img></div>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+<div style="display:flex;align-items:center;gap:8px;font-size:19px;font-weight:700"><div style="width:16px;height:16px;border-radius:50%;background:{{ l.hex }}"></div>{{ l.name }}</div>
+<div style="display:flex;gap:8px">
+<a href="{{ l.src }}" download style="font-family:'IBM Plex Mono',monospace;font-size:13px;padding:8px 14px;background:#0E1A3A;color:#F6F0E4;text-decoration:none;border-radius:99px">SVG</a>
+<button onClick="{{ l.png }}" style="font-family:'IBM Plex Mono',monospace;font-size:13px;padding:8px 14px;border:2px solid #0E1A3A;background:transparent;color:#0E1A3A;border-radius:99px;cursor:pointer">PNG</button>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:24px;font-size:17px;line-height:1.5;font-weight:500">
+<div style="display:flex;flex-direction:column;gap:4px"><div style="font-weight:800">Clear space</div><div>Keep a margin of at least ¼ of the logo height on all sides.</div></div>
+<div style="display:flex;flex-direction:column;gap:4px"><div style="font-weight:800">Minimum size</div><div>120 px wide on screen, 30 mm in print, so the fishbone stays readable.</div></div>
+<div style="display:flex;flex-direction:column;gap:4px"><div style="font-weight:800">Don't</div><div>Outline, stretch, rotate, or place the logo over the pattern in its own background color.</div></div>
+</div>
+</section>
+
+<section id="palette" style="display:flex;flex-direction:column;gap:28px;scroll-margin-top:90px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:2px solid #0E1A3A;padding-bottom:12px">
+<h2 style="margin:0;font-size:40px;font-weight:800">Palette</h2>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:13px">{{ copiedLabel }}</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px">
+<sc-for list="{{ palette }}" as="c" hint-placeholder-count="8">
+<button onClick="{{ c.copy }}" style="all:unset;cursor:pointer;display:flex;flex-direction:column;border-radius:8px;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(14,26,58,.15);background:#FFFDF8" style-hover="box-shadow:inset 0 0 0 2px #0E1A3A">
+<div style="height:120px;background:{{ c.hex }}"></div>
+<div style="padding:12px 14px;display:flex;flex-direction:column;gap:2px">
+<div style="font-size:18px;font-weight:700">{{ c.name }}</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:12px">{{ c.hex }}</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:12px">{{ c.rgb }}</div>
+</div>
+</button>
+</sc-for>
+</div>
+</section>
+
+<section id="type" style="display:flex;flex-direction:column;gap:28px;scroll-margin-top:90px">
+<div style="display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;border-bottom:2px solid #0E1A3A;padding-bottom:12px">
+<h2 style="margin:0;font-size:40px;font-weight:800">Typography</h2>
+<div style="display:flex;gap:16px;font-family:'IBM Plex Mono',monospace;font-size:13px"><a href="https://fonts.google.com/specimen/Baloo+2" target="_blank">Get Baloo 2</a><a href="https://fonts.google.com/specimen/IBM+Plex+Mono" target="_blank">Get IBM Plex Mono</a></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:20px">
+<div style="background:#1C4ED8;color:#F6F0E4;border-radius:8px;padding:32px;display:flex;flex-direction:column;gap:12px">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:12px">Display · Baloo 2 ExtraBold</div>
+<div style="font-size:64px;font-weight:800;line-height:1">Fresco del día</div>
+<div style="font-size:20px;font-weight:500">Aa Bb Cc Dd Ee Ff Gg 0123456789</div>
+</div>
+<div style="background:#FFFDF8;border-radius:8px;padding:32px;display:flex;flex-direction:column;gap:12px;box-shadow:inset 0 0 0 1px rgba(14,26,58,.15)">
+<div style="font-family:'IBM Plex Mono',monospace;font-size:12px">Detail · IBM Plex Mono</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:28px;line-height:1.3">Pargo frito · $14</div>
+<div style="font-family:'IBM Plex Mono',monospace;font-size:15px;line-height:1.6">For prices, menus, labels and small print.</div>
+</div>
+</div>
+</section>
+
+</div>
+
+<footer style="background:#0F50C8;color:#F6F0E4">
+<div style="max-width:1240px;margin:0 auto;padding:48px 32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap">
+<img src="logo/parguito-logo-opposite-blue.svg" alt="Parguito" style="height:64px;display:block"></img>
+<button onClick="{{ downloadAll }}" style="font-family:'IBM Plex Mono',monospace;font-size:14px;padding:14px 22px;background:#F6F0E4;color:#0E1A3A;border:0;border-radius:99px;cursor:pointer" style-hover="background:#2EDE89">{{ zipLabel }}</button>
+</div>
+</footer>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;heroColorway&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;original&quot;,&quot;opposite-blue&quot;,&quot;blue-sun&quot;,&quot;night-pink&quot;,&quot;cream-cobalt&quot;],&quot;default&quot;:&quot;original&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { zipping: false, copied: null };
+  save(blob, name) {
+    const u = URL.createObjectURL(blob), a = document.createElement('a');
+    a.href = u; a.download = name; document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => URL.revokeObjectURL(u), 2000);
+  }
+  async png(src, size = 3000) {
+    const txt = await (await fetch(src)).text();
+    const vb = txt.match(/viewBox="([^"]+)"/)[1].split(' ').map(Number);
+    const w = size, h = Math.round(size * vb[3] / vb[2]);
+    const img = new Image();
+    img.src = URL.createObjectURL(new Blob([txt], { type: 'image/svg+xml' }));
+    await img.decode();
+    const c = document.createElement('canvas'); c.width = w; c.height = h;
+    c.getContext('2d').drawImage(img, 0, 0, w, h);
+    return new Promise(r => c.toBlob(r, 'image/png'));
+  }
+  pngHandler(src) {
+    return async e => { e && e.preventDefault(); this.save(await this.png(src), src.split('/').pop().replace('.svg', '.png')); };
+  }
+  async downloadAll() {
+    if (this.state.zipping || !window.JSZip) return;
+    this.setState({ zipping: true });
+    try {
+      const zip = new JSZip();
+      const files = ['logo/parguito-logo.svg'];
+      this.keys.forEach(k => files.push(`posters/parguito-${k}.svg`, `posters/parguito-${k}-solid.svg`, `logo/parguito-logo-${k}.svg`, `patterns/scales-${k}.svg`));
+      for (const f of files) {
+        zip.file('svg/' + f, await (await fetch(f)).blob());
+        if (!f.startsWith('patterns')) zip.file('png/' + f.replace('.svg', '.png'), await this.png(f));
+      }
+      this.save(await zip.generateAsync({ type: 'blob' }), 'parguito-brand-assets.zip');
+    } finally { this.setState({ zipping: false }); }
+  }
+  renderVals() {
+    const data = [
+      ['original','Original','#F0AF37','#D12176'],
+      ['opposite-blue','Opposite Blue','#0F50C8','#2EDE89'],
+      ['blue-sun','Blue Sun','#1C4ED8','#FFD23F'],
+      ['night-pink','Night Pink','#0E1A3A','#FF4FA3'],
+      ['cream-cobalt','Cream Cobalt','#F6F0E4','#1C4ED8']
+    ];
+    this.keys = data.map(d => d[0]);
+    const ways = data.map(([k,name,bg,fg]) => {
+      const poster = `posters/parguito-${k}.svg`, logo = `logo/parguito-logo-${k}.svg`, pattern = `patterns/scales-${k}.svg`;
+      const solid = `posters/parguito-${k}-solid.svg`;
+      return { key: k, name, bg, fg, poster, logo, pattern, solid,
+        preview: this.state.solid ? solid : poster,
+        solidPng: this.pngHandler(solid),
+        posterPng: this.pngHandler(poster), logoPng: this.pngHandler(logo), patternPng: this.pngHandler(pattern) };
+    });
+    const rgb = h => [1,3,5].map(i => parseInt(h.slice(i,i+2),16)).join(' ');
+    const palette = [
+      ['Cobalt','#0F50C8'],['Deep Scale','#0C3EC7'],['Mint','#2EDE89'],['Night','#0E1A3A'],
+      ['Sun','#FFD23F'],['Pink','#FF4FA3'],['Magenta','#D12176'],['Cream','#F6F0E4']
+    ].map(([name,hex]) => ({ name, hex, rgb: 'RGB ' + rgb(hex), copy: () => {
+      navigator.clipboard && navigator.clipboard.writeText(hex);
+      this.setState({ copied: hex }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ copied: null }), 1500);
+    } }));
+    const logos = [
+      ['Magenta','original','#D12176'],['Pink','night-pink','#FF4FA3'],['Mint','opposite-blue','#2EDE89'],
+      ['Sun','blue-sun','#FFD23F'],['Cobalt','cream-cobalt','#1C4ED8'],['Black',null,'#000000']
+    ].map(([name,k,hex]) => { const src = k ? `logo/parguito-logo-${k}.svg` : 'logo/parguito-logo.svg'; return { name, hex, src, png: this.pngHandler(src) }; });
+    const hero = ways.find(w => w.key === (this.props.heroColorway ?? 'original')) || ways[0];
+    return {
+      ways, palette, hero, logos,
+      downloadAll: () => this.downloadAll(),
+      showScales: () => this.setState({ solid: false }),
+      showSolid: () => this.setState({ solid: true }),
+      scalesBg: this.state.solid ? 'transparent' : '#0E1A3A', scalesFg: this.state.solid ? '#0E1A3A' : '#F6F0E4',
+      solidBg: this.state.solid ? '#0E1A3A' : 'transparent', solidFg: this.state.solid ? '#F6F0E4' : '#0E1A3A',
+      zipLabel: this.state.zipping ? 'Packing…' : 'Download all (.zip)',
+      copiedLabel: this.state.copied ? `Copied ${this.state.copied}` : 'Click a swatch to copy HEX'
+    };
+  }
+}
+</script>
+</body>
+</html>
